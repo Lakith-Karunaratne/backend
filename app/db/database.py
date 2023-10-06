@@ -1,6 +1,6 @@
 from app.env import APPENV
 from sqlalchemy import create_engine, exc
-from sqlalchemy.orm import sessionmaker, declarative_base, Session
+from sqlalchemy.orm import sessionmaker, Session
 from contextlib import contextmanager
 import warnings
 
@@ -20,7 +20,6 @@ options = {
     'options': '-c timezone=UTC'
 }
 
-Base = declarative_base() # For Model Migrations
 
 try:
     engine = create_engine(PGSQL_DATABASE_URL, connect_args=options)

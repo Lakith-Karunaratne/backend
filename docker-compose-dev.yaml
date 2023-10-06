@@ -12,7 +12,7 @@ services:
     ports:
       - "5432:5432" # Expose PostgreSQL port for access from host
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - ./db/pgsql:/var/lib/postgresql/data
 
 networks:
   default:

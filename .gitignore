@@ -2,8 +2,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-db/*
-
 
 # C extensions
 *.so
@@ -67,6 +65,8 @@ target/
 profile_default/
 ipython_config.py
 
+# DB
+db/pgsql/*
 
 # pyenv
 .python-version
