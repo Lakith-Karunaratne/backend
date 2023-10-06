@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: admin_db
+      POSTGRES_PASSWORD: abcd1234
+      POSTGRES_DB: dev_db
+      TZ: UTC
+    ports:
+      - "5432:5432" # Expose PostgreSQL port for access from host
+    volumes:
+      - ./db:/var/lib/postgresql/data
+
+networks:
+  default:
+    driver: bridge
