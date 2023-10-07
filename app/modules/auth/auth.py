@@ -10,6 +10,7 @@ from fastapi_login import LoginManager
 from fastapi_login.exceptions import InvalidCredentialsException
 from app.db.database import SessionManager
 from app.models.model import User, password_context
+from app.modules.auth import auth_schema
 from passlib.exc import UnknownHashError
 from datetime import timedelta
 
@@ -65,8 +66,29 @@ def login(data:OAuth2PasswordRequestForm = Depends()):
     }
 
 
-@router.get("/test/")
-async def read_items(token: str = Depends(login_manager)):
-    return {"token": token}
 
+@router.post('/user/', dependencies=[Depends(login_manager)])
+async def add_user(data: auth_schema.AddUserSchema):
+    return User.create_user(username=data.username,email=data.email,password=data.password)
+
+
+@router.patch('/user/{uuid}',dependencies=[Depends(login_manager)])
+async def update_user(data : auth_schema.UpdateUserSchema):
+    return User.update_user(username=data.username, new_email=data.new_email)
+
+
+# TODO: Write the crud
+@router.delete('/user/',dependencies=[Depends(login_manager)], tags=['DEV'])
+async def delete_user():
+    return 
+
+
+@router.get('/user/{username}',dependencies=[Depends(login_manager)])
+async def get_user_by_username(username):
+    return User.get_user(username=username)
+
+# TODO: Write the crud
+@router.get('/user/{uuid}',dependencies=[Depends(login_manager)], tags=['DEV'])
+async def get_user_by_id(username):
+    return
 

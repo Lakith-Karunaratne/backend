@@ -42,3 +42,10 @@ def SessionManager() -> Session:
         raise
     finally:
         db.close()
+
+
+async def paginate(query, page_number=0, page_limit=100):
+    length = query.count()
+    items = query.offset(page_number).limit(page_limit).all()
+    return {"items": items, "total": length, "limit": page_limit, "offset": page_number}
+
