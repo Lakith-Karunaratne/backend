@@ -6,13 +6,15 @@ class APPENV:
     _SQLUSERPW = config('SQLUSERPW')
     _SQLDB = config('SQLDB')
     _SQLPORT = config('SQLPORT')
+    _SECRET = config('SECRET')
 
     def __init__(self) -> None:
-        self._SQLHOST = config('SQLHOST')
-        self._SQLUSER = config('SQLUSER')
-        self._SQLUSERPW = config('SQLUSERPW')
-        self._SQLDB = config('SQLDB')
-        self._SQLPORT = config('SQLPORT')
+        # self._SQLHOST = config('SQLHOST')
+        # self._SQLUSER = config('SQLUSER')
+        # self._SQLUSERPW = config('SQLUSERPW')
+        # self._SQLDB = config('SQLDB')
+        # self._SQLPORT = config('SQLPORT')
+        pass 
 
     @classmethod
     def get_sql(cls) -> dict:
@@ -25,4 +27,10 @@ class APPENV:
         }
         return sql_config
 
+    @classmethod
+    def get_skey(cls) -> dict:
+        secret_config = {
+            "key":cls._SECRET
+        }
+        return secret_config
 
