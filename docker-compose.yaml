@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  # FastAPI Application
+  app:
+    build:
+      context: ./app  # Specify the directory containing your FastAPI app Dockerfile
+    ports:
+      - "8000:8000"    # Map the FastAPI app's port to host
+    environment:
+      - DATABASE_URL=postgresql://admin_db:abcd1234@db/dev_db  # Update with your database URL
+    depends_on:
+      - db
+
+  # PostgreSQL Database
+  db:
+    image: postgres:14  # You can use a specific PostgreSQL version
+    environment:
+      POSTGRES_USER: admin_db  # Change as needed
+      POSTGRES_PASSWORD: abcd1234  # Change as needed
+      POSTGRES_DB: dev_db  # Change as needed
+
+  # NGINX Reverse Proxy
+  nginx:
+    build:
+      context: ./docker/nginx  # Specify the directory containing your NGINX Dockerfile
+    ports:
+      - "80:80"    # Map NGINX port to host
+    depends_on:
+      - app
+
+networks:
+  default:
+    driver: bridge
