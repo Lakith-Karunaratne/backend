@@ -4,6 +4,7 @@ from app.env import APPENV
 from app.db import database
 from app.modules.auth import auth
 from app.modules.book_core import book_api
+from fastapi.middleware.cors import CORSMiddleware
 
 # from initial_data import add_first_user
 # from contextlib import asynccontextmanager
@@ -29,6 +30,17 @@ print(APPENV.get_sql())
 @app.get('/')
 def root():
     return {"detail":"personal book lib api"}
+
+origins =['*']
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+
 
 if __name__ == "__main__":
     PORT = 8000
