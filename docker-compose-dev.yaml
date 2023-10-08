@@ -3,6 +3,13 @@ version: '3.8'
 services:
   api:
     container_name: pbl-api-backend
+    environment:
+      - SQLHOST=backend-db-1
+      - SQLUSER=admin_db
+      - SQLUSERPW=abcd1234
+      - SQLDB=dev_db
+      - SQLPORT=5432
+      - SECRET=536140e0a6c9ac16ed3ec9a0ae793916eda09b13e8afcc73 # Change to HEX-16/32/64
     restart: unless-stopped
     build:
         context: .
@@ -13,6 +20,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
+
   # PostgreSQL Database
   db:
     image: postgres:14
@@ -22,10 +30,12 @@ services:
       POSTGRES_DB: dev_db
       TZ: UTC
     ports:
-      - "5432:5432" # Expose PostgreSQL port for access from host
+      - "5432:5432" # Expose PostgreSQL port for access from host SQL Client
+    expose:
+      - "5432:5432"
     volumes:
       - ./db/pgsql:/var/lib/postgresql/data
 
 networks:
   default:
-    driver: bridge
+    name: Dev
